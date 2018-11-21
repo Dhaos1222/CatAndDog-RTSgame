@@ -4,5 +4,7 @@ public class MainFrame extends BaseFrame{
 
 	public MainFrame() {
 		setKeyListener();
+		
+		setMouseListener();
 	}
 }

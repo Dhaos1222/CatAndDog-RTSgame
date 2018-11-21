@@ -47,8 +47,11 @@ public class MyPanel extends JPanel{
 		for(int i = 0;i<Cats.size();i++)
 		{
 			this.Cats.get(i).drawSelf(g);
-			//this.Dogs.get(i).drawSelf(g);
 		}
 		
+		for(int i = 0;i<Dogs.size();i++)
+		{
+			this.Dogs.get(i).drawSelf(g);
+		}
 	}
 }

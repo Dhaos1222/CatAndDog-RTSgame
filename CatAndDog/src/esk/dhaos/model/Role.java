@@ -73,24 +73,27 @@ public class Role extends Thread{
     } 
 	
     //角色移动的方法
-    public void move(){  
-        if(up){  
-            //改变角色在地图中的位置  
-        	if(y>=60)
-            y=y-step;  
-            //改变角色移动相对于固定元素点的偏移量   
+    public void move(){
+    	if(isChoose)
+    	{
+            if(up){  
+                //改变角色在地图中的位置  
+            	if(y>=60)
+                y=y-step;  
+                //改变角色移动相对于固定元素点的偏移量   
+            }  
+            if(down){  
+            	if(y<myPanel.getHeight()-145)
+                y=y+step;  
+            }  
+            if(left){
+            	if(x>80)
+                x=x-step;  
+            }  
+            if(right){
+            	if(x<myPanel.getWidth()-110)
+                x=x+step;  
+            }
         }  
-        if(down){  
-        	if(y<myPanel.getHeight()-145)
-            y=y+step;  
-        }  
-        if(left){
-        	if(x>80)
-            x=x-step;  
-        }  
-        if(right){
-        	if(x<myPanel.getWidth()-110)
-            x=x+step;  
-        }
-    }  
+    }
 }

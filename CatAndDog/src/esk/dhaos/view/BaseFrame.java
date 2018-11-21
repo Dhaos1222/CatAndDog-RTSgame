@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 import esk.dhaos.listener.FrameKeyListener;
+import esk.dhaos.listener.FrameMouseListener;
 import esk.dhaos.view.MyPanel;
 
 public class BaseFrame extends JFrame{
@@ -17,7 +18,7 @@ public class BaseFrame extends JFrame{
 	public MyPanel myPanel;
 	
 	//Êó±ê¼àÌıÆ÷
-	//public FrameMouseListener frameMouseListener;
+	public FrameMouseListener frameMouseListener;
 	
 	//¼üÅÌ¼àÌıÆ÷
 	public FrameKeyListener frameKeyListener;
@@ -27,6 +28,14 @@ public class BaseFrame extends JFrame{
 		this.frameKeyListener=new FrameKeyListener();
 		this.frameKeyListener.baseFrame=this;
 		this.addKeyListener(this.frameKeyListener);
+	}
+	
+	public void setMouseListener()
+	{
+		this.frameMouseListener=new FrameMouseListener();
+		this.frameMouseListener.baseFrame=this;
+		this.addMouseListener(this.frameMouseListener);
+		this.addMouseMotionListener(this.frameMouseListener);
 	}
 	
 	public BaseFrame()

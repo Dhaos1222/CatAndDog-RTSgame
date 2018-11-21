@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import esk.dhaos.model.Cat;
+import esk.dhaos.model.Dog;
 import esk.dhaos.view.BaseFrame;
 
 public class FrameKeyListener implements KeyListener{
@@ -41,6 +42,11 @@ public class FrameKeyListener implements KeyListener{
 			Cat cat = new Cat(this.baseFrame.myPanel);
 			cat.start();
 			this.baseFrame.myPanel.Cats.add(cat);
+			break;
+		case KeyEvent.VK_F2:
+			Dog dog = new Dog(this.baseFrame.myPanel);
+			dog.start();
+			this.baseFrame.myPanel.Dogs.add(dog);
 			break;
         default:  
             break;
