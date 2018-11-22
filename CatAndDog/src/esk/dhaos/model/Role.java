@@ -16,12 +16,16 @@ public class Role extends Thread{
 	
 	public int y;
 	
+	public int desX;
+	
+	public int desY;
+	
 	public boolean isLife = true;
 	
-	//判断是否被选中
+
 	public boolean isChoose = false;
 	
-	//判断角色是否移动
+
 	static int step = 3;
 	
     public boolean up = false;  
@@ -29,10 +33,10 @@ public class Role extends Thread{
     public boolean left = false;  
     public boolean right = false; 
     
-	//存放当前图片下标
+
 	public int imageindex=0;
 	public int i = 0;
-	//角色动画
+
 	public Image[] images_up;
 	public Image[] images_down;
 	public Image[] images_left;
@@ -72,27 +76,42 @@ public class Role extends Thread{
         }  
     } 
 	
-    //角色移动的方法
     public void move(){
     	if(isChoose)
     	{
-            if(up){  
-                //改变角色在地图中的位置  
+    		if(x!=desX&&y!=desY)
+    		{
+    			right = false;
+    			left = false;
+    			up = false;
+    			down = false;
+    			int disX = desX-x;
+    			int disY = desY-y;
+    			if(disX>=10)
+    				right = true;
+    			else if(disX<=-10)
+    				left = true;
+
+    			if(disY>=10)
+    				down = true;
+    			else if(disY<=-10)
+    				up = true;
+    		}
+            if(up){   
             	if(y>=60)
-                y=y-step;  
-                //改变角色移动相对于固定元素点的偏移量   
+            	y=y-step;
             }  
             if(down){  
             	if(y<myPanel.getHeight()-145)
-                y=y+step;  
+                y=y+step;
             }  
             if(left){
             	if(x>80)
-                x=x-step;  
+                x=x-step;
             }  
             if(right){
             	if(x<myPanel.getWidth()-110)
-                x=x+step;  
+                x=x+step;
             }
         }  
     }

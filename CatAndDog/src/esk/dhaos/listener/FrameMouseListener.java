@@ -22,8 +22,8 @@ public class FrameMouseListener implements MouseInputListener{
 				{
 					cat.isChoose = true;
 				}
-				else
-					cat.isChoose = false;
+//				else
+//					cat.isChoose = false;
 			}
 		}
 		else if(e.getButton()==MouseEvent.BUTTON3)
@@ -33,13 +33,11 @@ public class FrameMouseListener implements MouseInputListener{
 				Cat cat = this.baseFrame.myPanel.Cats.get(i);
 				if(cat.isChoose)
 				{
-					int xDis = e.getX()-28-cat.x;
-					int yDis = e.getY()-55-cat.y;
-					while(xDis!=0&&yDis!=0)
-					{
-						cat.x += xDis;
-						cat.y += yDis;
-					}
+					cat.desX = e.getX()-28;
+					cat.desY = e.getY()-55;
+//					int xDis = e.getX()-28-cat.x;
+//					int yDis = e.getY()-55-cat.y;
+					
 				}
 			}
 		}

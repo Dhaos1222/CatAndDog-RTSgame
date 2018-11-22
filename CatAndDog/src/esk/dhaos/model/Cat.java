@@ -13,8 +13,9 @@ public class Cat extends Role{
 		super(myPanel);
 		
 		this.x=(BaseFrame.frameWidth-this.width)/2-200;
-		
+		this.desX = this.x;
 		this.y=BaseFrame.frameHeight-this.height*2-200;
+		this.desY = this.y;
 		
 		this.images_down=new Image[] {
 				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatDown_1.png")),
