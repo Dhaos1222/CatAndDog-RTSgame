@@ -22,8 +22,6 @@ public class FrameMouseListener implements MouseInputListener{
 				{
 					cat.isChoose = true;
 				}
-//				else
-//					cat.isChoose = false;
 			}
 		}
 		else if(e.getButton()==MouseEvent.BUTTON3)
@@ -70,8 +68,11 @@ public class FrameMouseListener implements MouseInputListener{
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		Cursor cu = new Cursor(Cursor.CROSSHAIR_CURSOR);
-		this.baseFrame.setCursor(cu);
+		if(e.getButton()==MouseEvent.BUTTON1) {
+			Cursor cu = new Cursor(Cursor.CROSSHAIR_CURSOR);
+			this.baseFrame.setCursor(cu);
+		}
+
 	}
 
 	@Override

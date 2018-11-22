@@ -26,7 +26,7 @@ public class Role extends Thread{
 	public boolean isChoose = false;
 	
 
-	static int step = 3;
+	static int step = 1;
 	
     public boolean up = false;  
     public boolean down = false;  
@@ -41,6 +41,7 @@ public class Role extends Thread{
 	public Image[] images_down;
 	public Image[] images_left;
 	public Image[] images_right;
+	public Image[] images_noChoose;
 	
 	public Role(MyPanel myPanel)
 	{
@@ -49,19 +50,34 @@ public class Role extends Thread{
 	}
 	
 	public void drawSelf(Graphics g) {
-		if(up)
-		    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
-		else if(left)
-		    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
-		else if(right)
-		    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
+		if(isChoose)
+		{
+			if(up)
+			    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
+			else if(left)
+			    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
+			else if(right)
+			    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
+			else
+			    g.drawImage(this.images_down[imageindex],x,y,width,height,null);
+			
+		}
 		else
-		    g.drawImage(this.images_down[imageindex],x,y,width,height,null);
-		
+		{
+			if(up)
+			    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
+			else if(left)
+			    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
+			else if(right)
+			    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
+			else
+			    g.drawImage(this.images_noChoose[imageindex],x,y,width,height,null);
+			
+		}
 		if(this.myPanel.timer%150==0)
 			this.imageindex++;
 		
-		if(this.imageindex==this.images_down.length)
+		if(this.imageindex==this.images_up.length)
 			this.imageindex=0;
 	}
 	
@@ -77,42 +93,70 @@ public class Role extends Thread{
     } 
 	
     public void move(){
+		right = false;
+		left = false;
+		up = false;
+		down = false;
     	if(isChoose)
     	{
     		if(x!=desX&&y!=desY)
     		{
-    			right = false;
-    			left = false;
-    			up = false;
-    			down = false;
     			int disX = desX-x;
     			int disY = desY-y;
-    			if(disX>=10)
+    			if(disX>=15)
     				right = true;
-    			else if(disX<=-10)
+    			else if(disX<=-15)
     				left = true;
-
-    			if(disY>=10)
+    			if(disY>=15)
     				down = true;
-    			else if(disY<=-10)
+    			else if(disY<=-15)
     				up = true;
     		}
-            if(up){   
-            	if(y>=60)
-            	y=y-step;
-            }  
-            if(down){  
-            	if(y<myPanel.getHeight()-145)
-                y=y+step;
-            }  
-            if(left){
-            	if(x>80)
-                x=x-step;
-            }  
-            if(right){
-            	if(x<myPanel.getWidth()-110)
-                x=x+step;
-            }
-        }  
+    		for(int i = 0;i<this.myPanel.Cats.size();i++)
+    		{
+    			Cat cat = this.myPanel.Cats.get(i);
+    			if(cat!=this)
+    			{
+    				//System.out.println("Hello!");
+    				if(desX>cat.desX-5&&desX<cat.desX+5&&desY>cat.desY-5&&desY<cat.desY+5)
+    				{
+//    					int tempX = cat.desX-desX;
+//    					int tempY = cat.desY-desY;
+//    					System.out.println((int)(Math.random()*10)%2);
+    					if((int)(Math.random()*10)%2==0)
+    						desX -= 20;
+    					else
+    						desX += 20;
+    					if((int)(Math.random()*10)%2==0)
+    						desY += 20;
+    					else
+    						desY -= 20;
+    				}
+    			}
+	            if(up){   
+	            	if(y>=60)
+	            	y=y-step;
+	            }  
+	            if(down){  
+	            	if(y<myPanel.getHeight()-145)
+	                y=y+step;
+	            }  
+	            if(left){
+	            	if(x>80)
+	                x=x-step;
+	            }  
+	            if(right){
+	            	if(x<myPanel.getWidth()-110)
+	                x=x+step;
+	            }
+    				
+    		}
+
+        }
+    	else
+    	{
+    		desX = x;
+    		desY = y;
+    	}
     }
 }

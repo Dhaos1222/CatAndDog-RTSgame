@@ -17,7 +17,7 @@ public class Cat extends Role{
 		this.y=BaseFrame.frameHeight-this.height*2-200;
 		this.desY = this.y;
 		
-		this.images_down=new Image[] {
+		this.images_noChoose=new Image[] {
 				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatDown_1.png")),
 				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatDown_2.png")),
 				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatDown_3.png")),
@@ -43,6 +43,13 @@ public class Cat extends Role{
 				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatRight_2.png")),
 				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatRight_3.png")),
 				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatRight_4.png"))
+		};
+		
+		this.images_down=new Image[] {
+				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatChooseDown_1.png")),
+				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatChooseDown_2.png")),
+				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatChooseDown_3.png")),
+				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatChooseDown_4.png"))
 		};
 	}
 }

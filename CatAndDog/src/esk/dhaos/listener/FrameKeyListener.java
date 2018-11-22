@@ -48,6 +48,13 @@ public class FrameKeyListener implements KeyListener{
 			dog.start();
 			this.baseFrame.myPanel.Dogs.add(dog);
 			break;
+		case KeyEvent.VK_ESCAPE:
+			for(int i = 0;i<this.baseFrame.myPanel.Cats.size();i++)
+			{
+				Cat cat2 = this.baseFrame.myPanel.Cats.get(i);
+				cat2.isChoose = false;
+			}
+			break;
         default:  
             break;
 		}

@@ -16,7 +16,7 @@ public class Dog extends Role{
 		this.desX=this.x;
 		this.y=BaseFrame.frameHeight-this.height*2-400;
 		this.desY=this.y;
-		this.images_down=new Image[] {
+		this.images_noChoose=new Image[] {
 				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogDown_1.png")),
 				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogDown_2.png")),
 				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogDown_3.png")),
