@@ -1,5 +1,6 @@
 package esk.dhaos.model;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -22,9 +23,10 @@ public class Role extends Thread{
 	
 	public boolean isLife = true;
 	
+	public int hp;
 
 	public boolean isChoose = false;
-	
+	public boolean isAttacking = false;
 
 	static int step = 1;
 	
@@ -42,6 +44,7 @@ public class Role extends Thread{
 	public Image[] images_left;
 	public Image[] images_right;
 	public Image[] images_noChoose;
+	public Image[] images_attack;
 	
 	public Role(MyPanel myPanel)
 	{
@@ -50,17 +53,36 @@ public class Role extends Thread{
 	}
 	
 	public void drawSelf(Graphics g) {
+		g.setColor(new Color(234,75,53));
+		g.fillRect(x-3,y,this.hp/2,3);
+		g.setColor(new Color(190,195,199));
+		g.drawRect(x-3,y,51,4);
 		if(isChoose)
 		{
 			if(up)
+			{
+				if(isAttacking)
+			        g.drawImage(this.images_attack[imageindex],x,y-48,width,height,null);
 			    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
+			}
 			else if(left)
+			{
+				if(isAttacking)
+			        g.drawImage(this.images_attack[imageindex],x-48,y,width,height,null);
 			    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
+			}
 			else if(right)
+			{
+				if(isAttacking)
+			        g.drawImage(this.images_attack[imageindex],x+48,y,width,height,null);
 			    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
+			}
 			else
+			{
+				if(isAttacking)
+			        g.drawImage(this.images_attack[imageindex],x,y+48,width,height,null);
 			    g.drawImage(this.images_down[imageindex],x,y,width,height,null);
-			
+			}
 		}
 		else
 		{

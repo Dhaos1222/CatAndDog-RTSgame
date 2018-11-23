@@ -12,6 +12,8 @@ public class Dog extends Role{
 		
 		super(myPanel);
 		
+		this.hp = 100;
+		
 		this.x=(BaseFrame.frameWidth-this.width)/2+200;
 		this.desX=this.x;
 		this.y=BaseFrame.frameHeight-this.height*2-400;
@@ -42,6 +44,13 @@ public class Dog extends Role{
 				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogRight_2.png")),
 				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogRight_3.png")),
 				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogRight_4.png"))
+		};
+		
+		this.images_attack=new Image[] {
+				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogAttack_1.png")),
+				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogAttack_2.png")),
+				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogAttack_1.png")),
+				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogAttack_2.png"))
 		};
 	}
 

@@ -1,5 +1,6 @@
 package esk.dhaos.view;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -13,9 +14,9 @@ import esk.dhaos.thread.DrawableThread;
 
 public class MyPanel extends JPanel{
 	
-	//´æ·Å±³¾°Í¼Æ¬
+	//ï¿½ï¿½Å±ï¿½ï¿½ï¿½Í¼Æ¬
 	public Image bgImage;
-	//ÓÎÏ·½áÊøÍ¼Æ¬
+	//ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 	public Image endImage;
 	
 	public int timer=0;
@@ -26,13 +27,18 @@ public class MyPanel extends JPanel{
 	public ArrayList<Dog> Dogs=new ArrayList<Dog>();
 	public DrawableThread drawableThread;
 	
+	public boolean isSelect = false;
+	public int sx;
+	public int sy;
+	public int dx;
+	public int dy;
 	
 	public MyPanel() 
 	{
 		bgImage = Toolkit.getDefaultToolkit().getImage(MyPanel.class.getResource("/images/bg.png"));
-		//´´½¨Ïß³Ì
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
 		this.drawableThread=new DrawableThread(this);
-		//Æô¶¯Ïß³Ì
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
 		this.drawableThread.start();
 		
 	}
@@ -53,5 +59,13 @@ public class MyPanel extends JPanel{
 		{
 			this.Dogs.get(i).drawSelf(g);
 		}
+		if(isSelect)
+		    selectUnit(g,sx,sy,dx-sx,dy-sy);
+	}
+	
+	public void selectUnit(Graphics g, int x, int y, int width, int height)
+	{
+		g.setColor(Color.WHITE);
+		g.drawRect(x,y,width,height);
 	}
 }
