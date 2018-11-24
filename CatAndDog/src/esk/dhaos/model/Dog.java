@@ -8,15 +8,17 @@ import esk.dhaos.view.MyPanel;
 
 public class Dog extends Role{
 
+	public Cat attacker = null;
+	
 	public Dog(MyPanel myPanel) {
 		
 		super(myPanel);
 		
 		this.hp = 100;
 		
-		this.x=(BaseFrame.frameWidth-this.width)/2+200;
+		this.x=(BaseFrame.frameWidth-this.width)/2+200+(int)(Math.random()*100);
 		this.desX=this.x;
-		this.y=BaseFrame.frameHeight-this.height*2-400;
+		this.y=BaseFrame.frameHeight-this.height*2-400+(int)(Math.random()*100);
 		this.desY=this.y;
 		this.images_noChoose=new Image[] {
 				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogDown_1.png")),
@@ -47,11 +49,23 @@ public class Dog extends Role{
 		};
 		
 		this.images_attack=new Image[] {
-				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogAttack_1.png")),
-				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogAttack_2.png")),
-				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogAttack_1.png")),
-				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogAttack_2.png"))
+				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatAttack_1.png")),
+				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatAttack_2.png")),
+				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatAttack_1.png")),
+				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatAttack_2.png"))
 		};
 	}
+	
+    public void underAttacking()
+    {
+		if(this.hp>0)
+		    this.hp-=1;
+		else
+		{
+			this.myPanel.Dogs.remove(this);
+			this.attacker.isAttacking = false;
+		}
+
+    }
 
 }

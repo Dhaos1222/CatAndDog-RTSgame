@@ -14,10 +14,12 @@ import esk.dhaos.thread.DrawableThread;
 
 public class MyPanel extends JPanel{
 	
-	//��ű���ͼƬ
+
 	public Image bgImage;
-	//��Ϸ����ͼƬ
+
 	public Image endImage;
+	
+	public Image move;
 	
 	public int timer=0;
 	
@@ -28,6 +30,7 @@ public class MyPanel extends JPanel{
 	public DrawableThread drawableThread;
 	
 	public boolean isSelect = false;
+	public boolean isMoving = false;
 	public int sx;
 	public int sy;
 	public int dx;
@@ -36,9 +39,11 @@ public class MyPanel extends JPanel{
 	public MyPanel() 
 	{
 		bgImage = Toolkit.getDefaultToolkit().getImage(MyPanel.class.getResource("/images/bg.png"));
-		//�����߳�
+
+		move = Toolkit.getDefaultToolkit().getImage(MyPanel.class.getResource("/images/move.png"));
+		
 		this.drawableThread=new DrawableThread(this);
-		//�����߳�
+
 		this.drawableThread.start();
 		
 	}
@@ -61,11 +66,18 @@ public class MyPanel extends JPanel{
 		}
 		if(isSelect)
 		    selectUnit(g,sx,sy,dx-sx,dy-sy);
+		if(isMoving)
+			move(g,dx,dy,35,35);
 	}
-	
+	//区域选择
 	public void selectUnit(Graphics g, int x, int y, int width, int height)
 	{
 		g.setColor(Color.WHITE);
 		g.drawRect(x,y,width,height);
+	}
+	//移动光标
+	public void move(Graphics g, int x, int y, int width, int height)
+	{
+		g.drawImage(this.move,x-15,y-20,35,35,null);
 	}
 }

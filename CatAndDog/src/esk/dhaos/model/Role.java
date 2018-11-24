@@ -26,8 +26,10 @@ public class Role extends Thread{
 	public int hp;
 
 	public boolean isChoose = false;
+	public boolean underAttack = false;
+	//避免AOE攻击，限定单体攻击
 	public boolean isAttacking = false;
-
+	
 	static int step = 1;
 	
     public boolean up = false;  
@@ -39,6 +41,7 @@ public class Role extends Thread{
 	public int imageindex=0;
 	public int i = 0;
 
+	
 	public Image[] images_up;
 	public Image[] images_down;
 	public Image[] images_left;
@@ -52,6 +55,12 @@ public class Role extends Thread{
 		
 	}
 	
+	public void underAttacking()
+	{
+		if(this.hp>0)
+		    this.hp-=10;
+	}
+	
 	public void drawSelf(Graphics g) {
 		g.setColor(new Color(234,75,53));
 		g.fillRect(x-3,y,this.hp/2,3);
@@ -61,26 +70,18 @@ public class Role extends Thread{
 		{
 			if(up)
 			{
-				if(isAttacking)
-			        g.drawImage(this.images_attack[imageindex],x,y-48,width,height,null);
 			    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
 			}
 			else if(left)
 			{
-				if(isAttacking)
-			        g.drawImage(this.images_attack[imageindex],x-48,y,width,height,null);
 			    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
 			}
 			else if(right)
 			{
-				if(isAttacking)
-			        g.drawImage(this.images_attack[imageindex],x+48,y,width,height,null);
 			    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
 			}
 			else
 			{
-				if(isAttacking)
-			        g.drawImage(this.images_attack[imageindex],x,y+48,width,height,null);
 			    g.drawImage(this.images_down[imageindex],x,y,width,height,null);
 			}
 		}
@@ -95,6 +96,13 @@ public class Role extends Thread{
 			else
 			    g.drawImage(this.images_noChoose[imageindex],x,y,width,height,null);
 			
+		}
+		//被攻击
+		if(underAttack)
+		{
+	        g.drawImage(this.images_attack[imageindex],x,y,width,height,null);
+	        if(this.myPanel.timer%20==0)
+	            underAttacking();
 		}
 		if(this.myPanel.timer%150==0)
 			this.imageindex++;
@@ -139,12 +147,9 @@ public class Role extends Thread{
     			Cat cat = this.myPanel.Cats.get(i);
     			if(cat!=this)
     			{
-    				//System.out.println("Hello!");
+    				//防止碰撞（重叠）
     				if(desX>cat.desX-5&&desX<cat.desX+5&&desY>cat.desY-5&&desY<cat.desY+5)
     				{
-//    					int tempX = cat.desX-desX;
-//    					int tempY = cat.desY-desY;
-//    					System.out.println((int)(Math.random()*10)%2);
     					if((int)(Math.random()*10)%2==0)
     						desX -= 20;
     					else
@@ -154,26 +159,24 @@ public class Role extends Thread{
     					else
     						desY -= 20;
     				}
-    			}
-	            if(up){   
-	            	if(y>=60)
-	            	y=y-step;
-	            }  
-	            if(down){  
-	            	if(y<myPanel.getHeight()-145)
-	                y=y+step;
-	            }  
-	            if(left){
-	            	if(x>80)
-	                x=x-step;
-	            }  
-	            if(right){
-	            	if(x<myPanel.getWidth()-110)
-	                x=x+step;
-	            }
-    				
+    			}	
     		}
-
+            if(up){   
+            	if(y>=60)
+            	y=y-step;
+            }  
+            if(down){  
+            	if(y<myPanel.getHeight()-145)
+                y=y+step;
+            }  
+            if(left){
+            	if(x>80)
+                x=x-step;
+            }  
+            if(right){
+            	if(x<myPanel.getWidth()-110)
+                x=x+step;
+            }
         }
     	else
     	{

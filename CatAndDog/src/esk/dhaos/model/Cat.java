@@ -10,6 +10,8 @@ import esk.dhaos.view.MyPanel;
 
 public class Cat extends Role{
 	
+	public Dog target = null;
+	
 	public Cat(MyPanel myPanel) {
 		
 		super(myPanel);
@@ -57,12 +59,13 @@ public class Cat extends Role{
 		};
 		
 		this.images_attack=new Image[] {
-				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatAttack_1.png")),
-				Toolkit.getDefaultToolkit().getImage(Cat.class.getResource("/images/CatAttack_2.png")),
-				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/CatAttack_1.png")),
-				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/CatAttack_2.png"))
+				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogAttack_1.png")),
+				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogAttack_2.png")),
+				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogAttack_1.png")),
+				Toolkit.getDefaultToolkit().getImage(Dog.class.getResource("/images/DogAttack_2.png"))
 		};
 	}
+	
 	
 	public void drawSelf(Graphics g)
 	{
@@ -74,26 +77,21 @@ public class Cat extends Role{
 			g.drawRect(x-3,y,51,4);
 			if(up)
 			{
-				if(isAttacking)
-			        g.drawImage(this.images_attack[imageindex],x,y-48,width,height,null);
 			    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
 			}
 			else if(left)
 			{
-				if(isAttacking)
-			        g.drawImage(this.images_attack[imageindex],x-48,y,width,height,null);
+
 			    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
 			}
 			else if(right)
 			{
-				if(isAttacking)
-			        g.drawImage(this.images_attack[imageindex],x+48,y,width,height,null);
+
 			    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
 			}
 			else
 			{
-				if(isAttacking)
-			        g.drawImage(this.images_attack[imageindex],x,y+48,width,height,null);
+
 			    g.drawImage(this.images_down[imageindex],x,y,width,height,null);
 			}
 			
@@ -116,4 +114,97 @@ public class Cat extends Role{
 		if(this.imageindex==this.images_up.length)
 			this.imageindex=0;
 	}
+	
+    public void move(){
+		right = false;
+		left = false;
+		up = false;
+		down = false;
+    	if(isChoose)
+    	{
+    		if(x!=desX&&y!=desY)
+    		{
+    			int disX = desX-x;
+    			int disY = desY-y;
+    			if(disX>=15)
+    				right = true;
+    			else if(disX<=-15)
+    				left = true;
+    			if(disY>=15)
+    				down = true;
+    			else if(disY<=-15)
+    				up = true;
+    		}
+    		for(int i = 0;i<this.myPanel.Cats.size();i++)
+    		{
+    			Cat cat = this.myPanel.Cats.get(i);
+    			if(cat!=this)
+    			{
+    				//防止碰撞（重叠）
+    				if(desX>cat.desX-5&&desX<cat.desX+5&&desY>cat.desY-5&&desY<cat.desY+5)
+    				{
+    					if((int)(Math.random()*10)%2==0)
+    						desX -= 20;
+    					else
+    						desX += 20;
+    					if((int)(Math.random()*10)%2==0)
+    						desY += 20;
+    					else
+    						desY -= 20;
+    				}
+    			}	
+    		}
+    		for(int i = 0;i<this.myPanel.Dogs.size();i++)
+    		{
+    			target = this.myPanel.Dogs.get(i);
+    			//target.underAttack = false;
+    			//进入攻击距离开始攻击
+    			if(Math.sqrt(Math.abs((x-target.x)*(x-target.x))+Math.abs((y-target.y)*(y-target.y)))<50)
+    			{
+        			if(this.isAttacking==false)
+        			{
+    					this.isAttacking = true;
+    					target.underAttack = true;
+    					target.attacker = this;
+        			}
+    			}
+    			else
+    			{
+    				target.underAttack = false;
+    				this.isAttacking = false;
+    			}
+
+    			//this.isAttacking = false;
+    		}
+
+            if(up){   
+            	if(y>=60)
+            	y=y-step;
+            }  
+            if(down){  
+            	if(y<myPanel.getHeight()-145)
+                y=y+step;
+            }  
+            if(left){
+            	if(x>80)
+                x=x-step;
+            }  
+            if(right){
+            	if(x<myPanel.getWidth()-110)
+                x=x+step;
+            }
+        }
+    	else
+    	{
+    		desX = x;
+    		desY = y;
+    	}
+    }
+    public void underAttacking()
+    {
+		if(this.hp>0)
+		    this.hp-=10;
+		else
+			this.myPanel.Cats.remove(this);
+    }
 }

@@ -2,6 +2,9 @@ package esk.dhaos.listener;
 
 
 import java.awt.Cursor;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import javax.swing.event.MouseInputListener;
 
@@ -15,6 +18,7 @@ public class FrameMouseListener implements MouseInputListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
+
 		if(e.getButton()==MouseEvent.BUTTON1)
 		{
 			for(int i = 0;i<this.baseFrame.myPanel.Cats.size();i++)
@@ -33,16 +37,20 @@ public class FrameMouseListener implements MouseInputListener{
 				Cat cat = this.baseFrame.myPanel.Cats.get(i);
 				if(cat.isChoose)
 				{
+					this.baseFrame.myPanel.isMoving = true;
 					cat.desX = e.getX()-28;
 					cat.desY = e.getY()-55;
-					for(int j = 0;j<this.baseFrame.myPanel.Dogs.size();j++)
-					{
-						Dog dog = this.baseFrame.myPanel.Dogs.get(j);
-						if(e.getX()>(dog.x+10)&&e.getX()<(dog.x+dog.width-5)&&e.getY()>(dog.y+30)&&e.getY()<(dog.y+dog.height+20))
-						{
-							cat.isAttacking = true;
-						}
-					}
+//					for(int j = 0;j<this.baseFrame.myPanel.Dogs.size();j++)
+//					{
+//						Dog dog = this.baseFrame.myPanel.Dogs.get(j);
+//						if(e.getX()>(dog.x+10)&&e.getX()<(dog.x+dog.width-5)&&e.getY()>(dog.y+30)&&e.getY()<(dog.y+dog.height+20))
+//						{
+//							cat.isAttacking = true;
+//						}
+						
+//						if(Math.sqrt(Math.abs((cat.x-dog.x)*(cat.x-dog.x))+Math.abs((cat.y-dog.y)*(cat.y-dog.y)))<50)
+//							cat.isAttacking = true;
+//					}
 //					int xDis = e.getX()-28-cat.x;
 //					int yDis = e.getY()-55-cat.y;		
 				}
@@ -66,6 +74,7 @@ public class FrameMouseListener implements MouseInputListener{
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub	
+		this.baseFrame.myPanel.isMoving = false;
 		this.baseFrame.myPanel.sx = e.getX()-5;
 		this.baseFrame.myPanel.sy = e.getY()-30;
 		this.baseFrame.myPanel.dx = this.baseFrame.myPanel.sx;
@@ -88,6 +97,7 @@ public class FrameMouseListener implements MouseInputListener{
 			}
 		}
 		this.baseFrame.myPanel.isSelect = false;
+		this.baseFrame.myPanel.isMoving = false;
 	}
 	
 	@Override
