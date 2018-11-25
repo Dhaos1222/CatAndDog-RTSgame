@@ -110,6 +110,7 @@ public class FrameMouseListener implements MouseInputListener{
 		System.out.println(this.baseFrame.myPanel.dx);
 		System.out.println(this.baseFrame.myPanel.dy);
 		this.baseFrame.myPanel.isSelect = true;
+
 	}
 
 	@Override

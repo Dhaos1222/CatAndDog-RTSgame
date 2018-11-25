@@ -8,7 +8,8 @@ import esk.dhaos.view.MyPanel;
 
 public class Dog extends Role{
 
-	public Cat attacker = null;
+//	public Cat target = null;
+//	public Cat attacker = null;
 	
 	public Dog(MyPanel myPanel) {
 		
@@ -62,10 +63,107 @@ public class Dog extends Role{
 		    this.hp-=1;
 		else
 		{
+			this.isLife = false;
+//			this.attacker.isAttacking = false;
+//			this.isAttacking = false;
+//			this.underAttack = false;
+//			this.attacker.target = null;
+//			this.attacker.attacker = null;
 			this.myPanel.Dogs.remove(this);
-			this.attacker.isAttacking = false;
 		}
 
     }
 
+    public void move(){
+		right = false;
+		left = false;
+		up = false;
+		down = false;
+		if(this.myPanel.timer%20==0)
+		{
+			if((int)(Math.random()*10)%2==0)
+				desX -= 20;
+			else
+				desX += 20;
+			if((int)(Math.random()*10)%2==0)
+				desY += 20;
+			else
+				desY -= 20;
+		}
+		if(x!=desX&&y!=desY)
+		{
+			int disX = desX-x;
+			int disY = desY-y;
+			if(disX>=15)
+				right = true;
+			else if(disX<=-15)
+				left = true;
+			if(disY>=15)
+				down = true;
+			else if(disY<=-15)
+				up = true;
+		}
+		for(int i = 0;i<this.myPanel.Cats.size();i++)
+		{
+			Cat cat = this.myPanel.Cats.get(i);
+
+			//进入攻击距离开始攻击
+			if(Math.sqrt(Math.abs((x-cat.x)*(x-cat.x))+Math.abs((y-cat.y)*(y-cat.y)))<50)
+			{
+    			if(this.isAttacking==false)
+    			{
+					this.isAttacking = true;
+					cat.underAttack = true;
+					//cat.attacker = this;
+    			}
+			}
+			else
+			{
+				cat.underAttack = false;
+				//target.underAttack = false;
+				this.isAttacking = false;
+			}
+
+			//this.isAttacking = false;
+		}
+		
+        if(up){   
+        	if(y>=60)
+        	y=y-step;
+        	else
+        	{
+        		desX = x;
+        		desY = y;
+        	}
+        }  
+        if(down){  
+        	if(y<myPanel.getHeight()-145)
+            y=y+step;
+        	else
+        	{
+        		desX = x;
+        		desY = y;
+        	}
+        }  
+        if(left){
+        	if(x>80)
+            x=x-step;
+        	else
+        	{
+        		desX = x;
+        		desY = y;
+        	}
+        }  
+        if(right){
+        	if(x<myPanel.getWidth()-110)
+            x=x+step;
+        	else
+        	{
+        		desX = x;
+        		desY = y;
+        	}
+        }
+
+    }
+    
 }

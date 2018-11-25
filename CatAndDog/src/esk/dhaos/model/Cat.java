@@ -10,7 +10,8 @@ import esk.dhaos.view.MyPanel;
 
 public class Cat extends Role{
 	
-	public Dog target = null;
+//	public Dog target = null;
+//	public Dog attacker = null;
 	
 	public Cat(MyPanel myPanel) {
 		
@@ -69,50 +70,59 @@ public class Cat extends Role{
 	
 	public void drawSelf(Graphics g)
 	{
-		if(isChoose)
+		if(isLife)
 		{
-			g.setColor(new Color(234,75,53));
-			g.fillRect(x-3,y,this.hp/2,3);
-			g.setColor(new Color(190,195,199));
-			g.drawRect(x-3,y,51,4);
-			if(up)
+			if(isChoose)
 			{
-			    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
-			}
-			else if(left)
-			{
+				g.setColor(new Color(234,75,53));
+				g.fillRect(x-3,y,this.hp/2,3);
+				g.setColor(new Color(190,195,199));
+				g.drawRect(x-3,y,51,4);
+				if(up)
+				{
+				    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
+				}
+				else if(left)
+				{
 
-			    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
-			}
-			else if(right)
-			{
+				    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
+				}
+				else if(right)
+				{
 
-			    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
+				    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
+				}
+				else
+				{
+				    g.drawImage(this.images_down[imageindex],x,y,width,height,null);
+				}
+				
 			}
 			else
 			{
-
-			    g.drawImage(this.images_down[imageindex],x,y,width,height,null);
+				if(up)
+				    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
+				else if(left)
+				    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
+				else if(right)
+				    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
+				else
+				    g.drawImage(this.images_noChoose[imageindex],x,y,width,height,null);
+				
+			}
+			if(underAttack)
+			{
+		        g.drawImage(this.images_attack[imageindex],x,y,width,height,null);
+		        if(this.myPanel.timer%20==0)
+		            underAttacking();
 			}
 			
-		}
-		else
-		{
-			if(up)
-			    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
-			else if(left)
-			    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
-			else if(right)
-			    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
-			else
-			    g.drawImage(this.images_noChoose[imageindex],x,y,width,height,null);
+			if(this.myPanel.timer%150==0)
+				this.imageindex++;
 			
+			if(this.imageindex==this.images_up.length)
+				this.imageindex=0;
 		}
-		if(this.myPanel.timer%150==0)
-			this.imageindex++;
-		
-		if(this.imageindex==this.images_up.length)
-			this.imageindex=0;
 	}
 	
     public void move(){
@@ -156,21 +166,22 @@ public class Cat extends Role{
     		}
     		for(int i = 0;i<this.myPanel.Dogs.size();i++)
     		{
-    			target = this.myPanel.Dogs.get(i);
-    			//target.underAttack = false;
+    			Dog dog = this.myPanel.Dogs.get(i);
+
     			//进入攻击距离开始攻击
-    			if(Math.sqrt(Math.abs((x-target.x)*(x-target.x))+Math.abs((y-target.y)*(y-target.y)))<50)
+    			if(Math.sqrt(Math.abs((x-dog.x)*(x-dog.x))+Math.abs((y-dog.y)*(y-dog.y)))<50)
     			{
         			if(this.isAttacking==false)
         			{
     					this.isAttacking = true;
-    					target.underAttack = true;
-    					target.attacker = this;
+    					dog.underAttack = true;
+    					//target.attacker = this;
         			}
     			}
     			else
     			{
-    				target.underAttack = false;
+        			dog.underAttack = false;
+    				//target.underAttack = false;
     				this.isAttacking = false;
     			}
 
@@ -203,8 +214,17 @@ public class Cat extends Role{
     public void underAttacking()
     {
 		if(this.hp>0)
-		    this.hp-=10;
+		    this.hp-=1;
 		else
+		{	
+			this.isLife = false;
+//			this.isAttacking = false;
+//			this.underAttack = false;
+//			this.attacker.isAttacking = false;
+//			this.attacker.target = null;
+//			this.attacker.attacker = null;
 			this.myPanel.Cats.remove(this);
+		}
+
     }
 }

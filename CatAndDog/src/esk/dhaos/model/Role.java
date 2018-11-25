@@ -62,53 +62,56 @@ public class Role extends Thread{
 	}
 	
 	public void drawSelf(Graphics g) {
-		g.setColor(new Color(234,75,53));
-		g.fillRect(x-3,y,this.hp/2,3);
-		g.setColor(new Color(190,195,199));
-		g.drawRect(x-3,y,51,4);
-		if(isChoose)
+		if(isLife)
 		{
-			if(up)
+			g.setColor(new Color(234,75,53));
+			g.fillRect(x-3,y,this.hp/2,3);
+			g.setColor(new Color(190,195,199));
+			g.drawRect(x-3,y,51,4);
+			if(isChoose)
 			{
-			    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
-			}
-			else if(left)
-			{
-			    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
-			}
-			else if(right)
-			{
-			    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
+				if(up)
+				{
+				    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
+				}
+				else if(left)
+				{
+				    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
+				}
+				else if(right)
+				{
+				    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
+				}
+				else
+				{
+				    g.drawImage(this.images_down[imageindex],x,y,width,height,null);
+				}
 			}
 			else
 			{
-			    g.drawImage(this.images_down[imageindex],x,y,width,height,null);
+				if(up)
+				    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
+				else if(left)
+				    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
+				else if(right)
+				    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
+				else
+				    g.drawImage(this.images_noChoose[imageindex],x,y,width,height,null);
+				
 			}
-		}
-		else
-		{
-			if(up)
-			    g.drawImage(this.images_up[imageindex],x,y,width,height,null);
-			else if(left)
-			    g.drawImage(this.images_left[imageindex],x,y,width,height,null);
-			else if(right)
-			    g.drawImage(this.images_right[imageindex],x,y,width,height,null);
-			else
-			    g.drawImage(this.images_noChoose[imageindex],x,y,width,height,null);
+			//被攻击
+			if(underAttack)
+			{
+		        g.drawImage(this.images_attack[imageindex],x,y,width,height,null);
+		        if(this.myPanel.timer%20==0)
+		            underAttacking();
+			}
+			if(this.myPanel.timer%150==0)
+				this.imageindex++;
 			
+			if(this.imageindex==this.images_up.length)
+				this.imageindex=0;
 		}
-		//被攻击
-		if(underAttack)
-		{
-	        g.drawImage(this.images_attack[imageindex],x,y,width,height,null);
-	        if(this.myPanel.timer%20==0)
-	            underAttacking();
-		}
-		if(this.myPanel.timer%150==0)
-			this.imageindex++;
-		
-		if(this.imageindex==this.images_up.length)
-			this.imageindex=0;
 	}
 	
     public void run() {  
