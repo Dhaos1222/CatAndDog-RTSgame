@@ -12,7 +12,7 @@ public class Cat extends Role{
 	
 //	public Dog target = null;
 //	public Dog attacker = null;
-	
+	public Dog aim = null;
 	public Cat(MyPanel myPanel) {
 		
 		super(myPanel);
@@ -164,30 +164,60 @@ public class Cat extends Role{
     				}
     			}	
     		}
-    		for(int i = 0;i<this.myPanel.Dogs.size();i++)
+    		
+//    		for(int i = 0;i<this.myPanel.Dogs.size();i++)
+//    		{
+//    			Dog dog = this.myPanel.Dogs.get(i);
+//
+//    			//进入攻击距离开始攻击
+//    			if(Math.sqrt(Math.abs((x-dog.x)*(x-dog.x))+Math.abs((y-dog.y)*(y-dog.y)))<50)
+//    			{
+//        			if(this.isAttacking==false)
+//        			{
+//    					this.isAttacking = true;
+//    					dog.underAttack = true;
+//    					//target.attacker = this;
+//        			}
+//    			}
+//    			else
+//    			{
+//        			dog.underAttack = false;
+//    				//target.underAttack = false;
+//    				this.isAttacking = false;
+//    			}
+//    			//this.isAttacking = false;
+//    		}
+    		
+    		if(this.isAttacking==false)
     		{
-    			Dog dog = this.myPanel.Dogs.get(i);
-
-    			//进入攻击距离开始攻击
-    			if(Math.sqrt(Math.abs((x-dog.x)*(x-dog.x))+Math.abs((y-dog.y)*(y-dog.y)))<50)
-    			{
-        			if(this.isAttacking==false)
+        		for(int i = 0;i<this.myPanel.Dogs.size();i++)
+        		{
+        			Dog dog = this.myPanel.Dogs.get(i);
+        			//进入攻击距离开始攻击
+        			if(Math.sqrt(Math.abs((x-dog.x)*(x-dog.x))+Math.abs((y-dog.y)*(y-dog.y)))<50)
         			{
-    					this.isAttacking = true;
-    					dog.underAttack = true;
-    					//target.attacker = this;
+        				//保存攻击目标
+        				aim = dog;
+        				//转换为攻击状态
+        				this.isAttacking = true;
         			}
+        			//this.isAttacking = false;
+        		}
+    		}
+    		else
+			{
+    			if(Math.sqrt(Math.abs((x-aim.x)*(x-aim.x))+Math.abs((y-aim.y)*(y-aim.y)))<50)
+    			{
+    				aim.underAttack = true;
     			}
     			else
     			{
-        			dog.underAttack = false;
-    				//target.underAttack = false;
     				this.isAttacking = false;
+    				aim.underAttack = false;
     			}
-
-    			//this.isAttacking = false;
-    		}
-
+				//target.attacker = this;
+			}
+    		
             if(up){   
             	if(y>=60)
             	y=y-step;
@@ -223,6 +253,9 @@ public class Cat extends Role{
 //			this.attacker.isAttacking = false;
 //			this.attacker.target = null;
 //			this.attacker.attacker = null;
+			this.isAttacking = false;
+			this.underAttack = false;
+			this.aim.underAttack = false;
 			this.myPanel.Cats.remove(this);
 		}
 

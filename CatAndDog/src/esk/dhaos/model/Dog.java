@@ -10,7 +10,7 @@ public class Dog extends Role{
 
 //	public Cat target = null;
 //	public Cat attacker = null;
-	
+	public Cat aim = null;
 	public Dog(MyPanel myPanel) {
 		
 		super(myPanel);
@@ -69,6 +69,9 @@ public class Dog extends Role{
 //			this.underAttack = false;
 //			this.attacker.target = null;
 //			this.attacker.attacker = null;
+			this.isAttacking = false;
+			this.underAttack = false;
+			this.aim.underAttack = false;
 			this.myPanel.Dogs.remove(this);
 		}
 
@@ -103,30 +106,79 @@ public class Dog extends Role{
 			else if(disY<=-15)
 				up = true;
 		}
-		for(int i = 0;i<this.myPanel.Cats.size();i++)
+//		for(int i = 0;i<this.myPanel.Dogs.size();i++)
+//		{
+//			Dog dog = this.myPanel.Dogs.get(i);
+//			if(dog!=this)
+//			{
+//				//防止碰撞（重叠）
+//				if(desX>dog.desX-5&&desX<dog.desX+5&&desY>dog.desY-5&&desY<dog.desY+5)
+//				{
+//					if((int)(Math.random()*10)%2==0)
+//						desX -= 20;
+//					else
+//						desX += 20;
+//					if((int)(Math.random()*10)%2==0)
+//						desY += 20;
+//					else
+//						desY -= 20;
+//				}
+//			}	
+//		}
+//		
+		
+//		for(int i = 0;i<this.myPanel.Cats.size();i++)
+//		{
+//			Cat cat = this.myPanel.Cats.get(i);
+//
+//			//进入攻击距离开始攻击
+//			if(Math.sqrt(Math.abs((x-cat.x)*(x-cat.x))+Math.abs((y-cat.y)*(y-cat.y)))<50)
+//			{
+//    			if(this.isAttacking==false)
+//    			{
+//					this.isAttacking = true;
+//					cat.underAttack = true;
+//					//cat.attacker = this;
+//    			}
+//			}
+//			else
+//			{
+//				cat.underAttack = false;
+//				//target.underAttack = false;
+//				this.isAttacking = false;
+//			}
+//
+//			//this.isAttacking = false;
+//		}
+		if(this.isAttacking==false)
 		{
-			Cat cat = this.myPanel.Cats.get(i);
-
-			//进入攻击距离开始攻击
-			if(Math.sqrt(Math.abs((x-cat.x)*(x-cat.x))+Math.abs((y-cat.y)*(y-cat.y)))<50)
-			{
-    			if(this.isAttacking==false)
+    		for(int i = 0;i<this.myPanel.Cats.size();i++)
+    		{
+    			Cat cat = this.myPanel.Cats.get(i);
+    			//进入攻击距离开始攻击
+    			if(Math.sqrt(Math.abs((x-cat.x)*(x-cat.x))+Math.abs((y-cat.y)*(y-cat.y)))<50)
     			{
-					this.isAttacking = true;
-					cat.underAttack = true;
-					//cat.attacker = this;
+    				//保存攻击目标
+    				aim = cat;
+    				//转换为攻击状态
+    				this.isAttacking = true;
     			}
+    			//this.isAttacking = false;
+    		}
+		}
+		else
+		{
+			if(Math.sqrt(Math.abs((x-aim.x)*(x-aim.x))+Math.abs((y-aim.y)*(y-aim.y)))<50)
+			{
+				aim.underAttack = true;
 			}
 			else
 			{
-				cat.underAttack = false;
-				//target.underAttack = false;
 				this.isAttacking = false;
+				aim.underAttack = false;
 			}
-
-			//this.isAttacking = false;
+			//target.attacker = this;
 		}
-		
         if(up){   
         	if(y>=60)
         	y=y-step;

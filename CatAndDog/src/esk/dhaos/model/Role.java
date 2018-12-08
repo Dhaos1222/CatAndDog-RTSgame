@@ -116,7 +116,8 @@ public class Role extends Thread{
 	
     public void run() {  
         while(true){
-            move();  
+        	if(this.isLife)
+                move();  
             try {  
                 Thread.sleep(10);  
             } catch (InterruptedException e) {  

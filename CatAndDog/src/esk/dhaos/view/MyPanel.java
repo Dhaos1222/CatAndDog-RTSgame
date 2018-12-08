@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JPanel;
 
@@ -25,8 +26,8 @@ public class MyPanel extends JPanel{
 	
 	public int top=0;
 	
-	public ArrayList<Cat> Cats=new ArrayList<Cat>();
-	public ArrayList<Dog> Dogs=new ArrayList<Dog>();
+	public Vector<Cat> Cats=new Vector<Cat>();
+	public Vector<Dog> Dogs=new Vector<Dog>();
 	public DrawableThread drawableThread;
 	
 	public boolean isSelect = false;
