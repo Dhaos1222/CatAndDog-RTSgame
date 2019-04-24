@@ -1,4 +1,5 @@
-# CatAndDog-SLGgame-by-Java
+# CatAndDog-RTSgame-by-Java
+F1为生成己方单位，F2为生成敌方单位，鼠标右键移动，鼠标左键单击或拖拉选择单位，ESC键取消选择
 ## 一、	实作题目
 小型即时策略游戏
 
